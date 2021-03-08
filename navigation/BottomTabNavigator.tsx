@@ -5,31 +5,49 @@ import * as React from 'react';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import TabOneScreen from '../screens/TabOneScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import Account from '../screens/Account/Account';
+import NotFoundScreen from '../screens/Home/Home';
+import TabOneScreen from '../screens/QRCode/QrCodeGenerator';
+
+import TabOneScreen1 from '../screens/QRCode/QrCodeGenerator1';
+import TabTwoScreen from '../screens/QRCode/QRCodeScanner';
+import { BottomTabParamList, CardParamList,AccountParamList,QRCodeParamList ,HomeParamList} from '../types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator() {
   const colorScheme = useColorScheme();
-
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
-      <BottomTab.Screen
-        name="TabOne"
-        component={TabOneNavigator}
+      initialRouteName="Home"
+      tabBarOptions={{ activeTintColor:"black" ,tabStyle:{backgroundColor:"white"}}}>
+        <BottomTab.Screen
+         name="Home"
+        component={HomeNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+        }}
+      />
+   
+      <BottomTab.Screen
+        name="Card"
+        component={CardNavigator}
+        options={{
+          tabBarIcon: ({ color }) => <TabBarIcon name="md-card-outline" color={color} />,
         }}
       />
       <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoNavigator}
+        name="QRCode"
+        component={QRCodeNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="md-qr-code" color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Account"
+        component={AccountNavigator}
+        options={{
+          tabBarIcon: ({ color }) => <TabBarIcon name="people-sharp" color={color} />,
         }}
       />
     </BottomTab.Navigator>
@@ -39,35 +57,68 @@ export default function BottomTabNavigator() {
 // You can explore the built-in icon families and icons on the web at:
 // https://icons.expo.fyi/
 function TabBarIcon(props: { name: React.ComponentProps<typeof Ionicons>['name']; color: string }) {
-  return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
+  return <Ionicons size={20} style={{ marginBottom: -3 }} {...props} />;
 }
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const TabOneStack = createStackNavigator<TabOneParamList>();
+const CardStack = createStackNavigator<CardParamList>();
 
-function TabOneNavigator() {
+function CardNavigator() {
   return (
-    <TabOneStack.Navigator>
-      <TabOneStack.Screen
-        name="TabOneScreen"
-        component={TabOneScreen}
-        options={{ headerTitle: 'Tab One Title' }}
+    <CardStack.Navigator screenOptions={{ headerShown: false }}>
+      <CardStack.Screen
+        name="MyCard"
+        component={TabOneScreen1}
+        options={{ headerTitle: 'My Card' }}
       />
-    </TabOneStack.Navigator>
+ </CardStack.Navigator>
   );
 }
 
-const TabTwoStack = createStackNavigator<TabTwoParamList>();
+const AccountStack = createStackNavigator<AccountParamList>();
 
-function TabTwoNavigator() {
+function AccountNavigator() {
   return (
-    <TabTwoStack.Navigator>
-      <TabTwoStack.Screen
-        name="TabTwoScreen"
+    <AccountStack.Navigator screenOptions={{ headerShown: false }}>
+      <AccountStack.Screen
+        name="Account"
+        component={Account}
+        options={{ headerTitle: 'Account' }}
+      />
+    </AccountStack.Navigator>
+  );
+}
+
+
+
+const QRCodeStack = createStackNavigator<QRCodeParamList>();
+
+function QRCodeNavigator() {
+  return (
+    <QRCodeStack.Navigator screenOptions={{ headerShown: false }}>
+      <QRCodeStack.Screen
+        name="QRCode"
         component={TabTwoScreen}
-        options={{ headerTitle: 'Tab Two Title' }}
+
+        options={{ headerTitle: 'QR Code' }}
       />
-    </TabTwoStack.Navigator>
+    </QRCodeStack.Navigator>
   );
 }
+
+const HomeStack = createStackNavigator<HomeParamList>();
+
+function HomeNavigator() {
+  return (
+    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+      <HomeStack.Screen
+        name="HomeScreen"
+        component={NotFoundScreen}
+        options={{ headerTitle: 'Home' }}
+      />
+    </HomeStack.Navigator>
+  );
+}
+
+

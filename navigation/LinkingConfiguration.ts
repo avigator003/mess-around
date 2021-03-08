@@ -19,6 +19,21 @@ export default {
         },
       },
       NotFound: '*',
+      Drawer: {
+        screens: {
+          TabOne: {
+            screens: {
+              TabOneScreen: 'one',
+            },
+          },
+          TabTwo: {
+            screens: {
+              TabTwoScreen: 'two',
+            },
+          },
+        },
+      },
+     
     },
   },
 };
