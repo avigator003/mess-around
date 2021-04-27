@@ -3,19 +3,18 @@ import {
   LOGIN_USER_SUCCESS,
   LOGOUT_USER,
 } from "../ActionTypes";
-
+import api from "../../resources/api";
+import axios from 'axios'
 
 //Auth
 export const setLoginSuccess = (payload) => ({type: LOGIN_USER_SUCCESS, payload,});
 
 export const loginUser = (payload, cb) => {
-  console.log("login")
+  console.log("login",payload)
   return (dispatch) => {
-    
-    api
-      .post("/auth/login", payload)
+    axios.post("http://localhost:8000/api/auth/login")
       .then((res) => {
-          dispatch(setLoginSuccess(res.data));
+        console.log(res,"res")
           cb(null, {
             message: "Logged In",
           });
